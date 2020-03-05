@@ -5,11 +5,36 @@ from email.header import Header
 from email.generator import Generator
 from io import StringIO
 import json
+import datetime
+import sys
+
+average_fika_cravers = None
+fika_range_lower = None
+fika_range_upper = None
+day = None
+
+with open('Settings.json') as f:
+    data = json.load(f)
+    day = int(data["day"])
+    average_fika_cravers = int(data["average deltagare"])
+    fika_range_lower = int(data["max deltagar subtraktion"])
+    fika_range_upper = int(data["max deltagar addition"])
+    
+
+dayToday = datetime.datetime.today().weekday()
+date = datetime.datetime.today().date()
+
+lastWrittenDate = ""
+with open("LastWritten.txt", "r") as f:
+    lastWrittenDate = f.read()
+    
+if dayToday != 3 or str(date) == lastWrittenDate:
+    sys.exit()
+
+with open("LastWritten.txt", "w") as f:
+    f.write(str(date))
 
 
-average_fika_cravers = 13
-fika_range_lower = 3
-fika_range_upper = 2
 
 
 port = 587  # For starttls
@@ -28,7 +53,7 @@ print(sender_email)
 print(password)
 print(receiver_email)
 
-start = ["Hallå", "Hej", 'Tjenare', 'Halloj', 'Jenixen', 'Tjabba', 'Morsning', 'Tjabba tjena hallå!', "Tjo", 'Morsning korsning', 'Hejsan svejsan', 'Tjohej']
+start = ["Hallå", "Hej", 'Tjenare', 'Halloj', 'Jenixen', 'Tjabba', 'Morsning', 'Tjabba tjena hallå', "Tjo", 'Morsning korsning', 'Hejsan svejsan', 'Tjohej']
 intro = ["Då var det dags för spelonsdags klubben igen och våra medlemmar vill ha fika",
          "Imorgon är det spelonsdags klubb och vi hade högst uppskattat fika",
          "Vi hade uppskattat fika till spelonsdags klubben imorgon"]

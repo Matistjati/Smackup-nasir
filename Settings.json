@@ -1,0 +1,7 @@
+{
+	"_comment": "The day the email is sent. Monday = 0 and sunday = 6",
+	"day": "1",
+	"average deltagare": "13",
+	"max deltagar subtraktion": "3",
+	"max deltagar addition": "2"
+}
