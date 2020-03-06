@@ -28,7 +28,7 @@ lastWrittenDate = ""
 with open("LastWritten.txt", "r") as f:
     lastWrittenDate = f.read()
     
-if dayToday != 3 or str(date) == lastWrittenDate:
+if dayToday != day or str(date) == lastWrittenDate:
     sys.exit()
 
 with open("LastWritten.txt", "w") as f:
