@@ -8,11 +8,14 @@ import json
 import datetime
 import sys
 
+# Amount of fika cravers will be in range:
+# (average_fika_cravers-fika_range_lower, average_fika_cravers+fika_range_upper)
 average_fika_cravers = None
 fika_range_lower = None
 fika_range_upper = None
 day = None
 
+# Initialize data
 with open('Settings.json') as f:
     data = json.load(f)
     day = int(data["day"])
@@ -27,7 +30,8 @@ date = datetime.datetime.today().date()
 lastWrittenDate = ""
 with open("LastWritten.txt", "r") as f:
     lastWrittenDate = f.read()
-    
+
+# If it is not correct day or we have already written, terminate
 if dayToday != day or str(date) == lastWrittenDate:
     sys.exit()
 
@@ -43,6 +47,7 @@ sender_email = ""
 password = ""
 receiver_email = ""
 
+# Read password and stuff from a file not pushed to github
 with open('Credentials.json') as f:
     data = json.load(f)
     sender_email = data["sender"]
@@ -59,7 +64,7 @@ intro = ["Då var det dags för spelonsdags klubben igen och våra medlemmar vil
          "Vi hade uppskattat fika till spelonsdags klubben imorgon"]
 
 
-
+# Generate a random email
 message = """
 {}, Nasir.
 {}.
@@ -68,6 +73,7 @@ Mvh, Joshua Jeffmar 1C""".format(random.choice(start), random.choice(intro),
                                  average_fika_cravers + random.randint(-fika_range_lower, fika_range_upper))
 print(message)
 
+# Send the email
 context = ssl.create_default_context()
 with smtplib.SMTP(smtp_server, port) as server:
     server.ehlo()  # Can be omitted
